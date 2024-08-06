@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APOD</title>
+  <style>
+    /* Stile globale per il font */
+    body {
+      font-family: Arial, sans-serif; /* Font coerente con la home page */
+      background-color: #f5f5f5; /* Colore di sfondo simile a quello della home page */
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333; /* Colore del testo dell'intestazione */
+      text-align: center; /* Allinea il testo al centro */
+      margin-bottom: 20px; /* Spazio sotto l'intestazione */
+    }
+    .image-container {
+      display: flex; /* Usa Flexbox per allineare i contenuti */
+      align-items: flex-start; /* Allinea gli elementi lungo l'asse trasversale (inizio) */
+      margin-bottom: 20px; /* Spazio sotto il contenitore dell'immagine */
+      background: #fff; /* Sfondo bianco per contrastare con il colore di sfondo della pagina */
+      border-radius: 8px; /* Angoli arrotondati */
+      padding: 20px; /* Spazio interno */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Ombra leggera per dare profondità */
+    }
+    .image-container img {
+      height: auto; /* Altezza automatica proporzionale */
+      border-radius: 4px; /* Angoli arrotondati per le immagini */
+    }
+    .image-info {
+      margin-left: 20px; /* Spazio a sinistra dell'informazione */
+      flex-grow: 1; /* Permette all'elemento di espandersi e occupare lo spazio rimanente */
+    }
+    .copyright {
+      text-align: left; /* Allinea il testo a sinistra */
+      font-style: italic; /* Stile corsivo per il copyright */
+      font-size: 0.8em; /* Dimensione del carattere ridotta */
+      margin-top: 10px; /* Spazio sopra il copyright */
+    }
+    .explanation {
+      margin-top: 10px; /* Spazio sopra la spiegazione */
+    }
+    .date {
+      text-align: center; /* Centra la data sotto il titolo */
+      margin-bottom: 20px; /* Spazio sotto la data */
+      font-size: 1.2em; /* Dimensione del carattere per la data */
+    }
+  </style>
+</head>
+<body>
+<h1>Let's see the Astronomy Picture (or Video) Of the Day!</h1>
+
+<!-- Controllo condizionale per il titolo dell'immagine -->
+<div th:if="${title}">
+  <h2 th:text="${title}"></h2>
+</div>
+
+<!-- Data sotto il titolo dell'immagine -->
+<div th:if="${date}" class="date">
+  Date: <span th:text="${date}"></span>
+</div>
+
+<!-- Contenitore dell'immagine e delle informazioni -->
+<div class="image-container">
+  <!-- Condizionale per mostrare immagine o video -->
+  <div th:unless="${thumbnailUrl}">
+    <!-- Visualizza l'immagine se thumbnailUrl è nullo -->
+    <img width="560" th:src="${imageUrl}" alt="Image description">
+  </div>
+  <div th:if="${thumbnailUrl}">
+    <!-- Visualizza il video se thumbnailUrl non è nullo -->
+    <iframe width="560" height="315" th:src="${imageUrl}"
+            frameborder="0" allowfullscreen></iframe>
+  </div>
+
+  <!-- Informazioni a destra dell'immagine -->
+  <div class="image-info">
+    <!-- Campo per la spiegazione dell'immagine -->
+    <h3 th:if="${explanation}">Explanation:</h3>
+    <div th:if="${explanation}" class="explanation" th:text="${explanation}"></div>
+  </div>
+</div>
+
+<!-- Copyright sotto l'immagine -->
+<div th:if="${copyright}" class="copyright">
+  Copyright: <span th:text="${copyright}"></span>
+</div>
+
+</body>
+</html>
