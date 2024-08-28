@@ -62,7 +62,7 @@ public class ApodService {
         ApodResponse defaultResponse = new ApodResponse();
         defaultResponse.setTitle("No Title Available");
         defaultResponse.setExplanation("There was an error retrieving the data.");
-        defaultResponse.setUrl("https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg");
+        defaultResponse.setUrl("/images/No_Image_Available.jpg");
         return defaultResponse;
     }
 }
