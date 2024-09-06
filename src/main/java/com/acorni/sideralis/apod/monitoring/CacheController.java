@@ -2,6 +2,7 @@ package com.acorni.sideralis.apod.monitoring;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,19 +16,20 @@ import java.util.Set;
 public class CacheController {
     private CacheManager cacheManager;
 
+    @Autowired
     public CacheController(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
     }
 
     @GetMapping()
-    public List<cacheInfo> getCacheInfo() {
+    public List<cacheInfo> getCacheInfoList() {
         return cacheManager.getCacheNames()
                 .stream()
-                .map(this::getCacheInfo)
+                .map(this::buildCacheInfo)
                 .toList();
     }
 
-    private cacheInfo getCacheInfo(String cacheName) {
+    private cacheInfo buildCacheInfo(String cacheName) {
         Cache nativeCache =
                 (Cache)cacheManager.getCache(cacheName).getNativeCache();
         Set<Object> keys = nativeCache.asMap().keySet();
