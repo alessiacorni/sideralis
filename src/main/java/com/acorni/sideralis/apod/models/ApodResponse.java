@@ -118,6 +118,9 @@ public class ApodResponse {
     }
 
     public String[] getConcepts() {
+        if (!conceptTags) {
+            return new String[0];
+        }
         return concepts;
     }
 
